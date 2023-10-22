@@ -42,9 +42,18 @@ bool isValidPositionOnGrid(int rowCount, int colCount, int x, int y) {
     return x >= 0 && x < rowCount && y >= 0 && y < colCount;
 }
 
+bool validateInput(int rowCount, int colCount, pair<int, int> startPosition, pair<int, int> goalPosition) {
+    return isValidPositionOnGrid(rowCount, colCount, startPosition.first, startPosition.second) &&
+           isValidPositionOnGrid(rowCount, colCount, goalPosition.first, goalPosition.second);
+}
+
 vector<pair<int, int>> processAStarPathfinding(vector<vector<int>>& grid, pair<int, int> startPosition, pair<int, int> goalPosition) {
     int rows = grid.size();
     int cols = grid[0].size();
+
+    if(!validateInput(rows, cols, startPosition, goalPosition)) {
+        return vector<int,int>>();
+    }
 
     vector<pair<int, int>> possibleDirections = {
         {1, 0},
